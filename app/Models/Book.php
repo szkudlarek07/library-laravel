@@ -9,4 +9,15 @@ class Book extends Model
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'author',
+        'year',
+        'description',
+    ];
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
 }
