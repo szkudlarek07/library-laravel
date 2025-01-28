@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\BookController;
@@ -10,3 +11,4 @@ Route::get('/user', function (Request $request) {
 
 
 Route::apiResource('books', BookController::class);
+Route::apiResource('reviews', ReviewController::class);
