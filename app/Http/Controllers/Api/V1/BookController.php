@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\BookResource;
 use App\Models\Book;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 
@@ -13,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        return BookResource::collection(Book::paginate(10));
     }
 
     /**
@@ -29,7 +31,15 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        $book = Book::create($request->validated());
+        return BookResource::make($book);
+
+        // $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'author' => 'required|string|max:255',
+        //     'year' => 'required|integer',
+        //     'description' => 'nullable|string',
+        // ]);
     }
 
     /**
@@ -37,7 +47,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return BookResource::make($book);
     }
 
     /**
@@ -53,7 +63,8 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $book->update($request->validated());
+        return BookResource::make($book);
     }
 
     /**
@@ -61,6 +72,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return BookResource::make($book);
     }
 }
