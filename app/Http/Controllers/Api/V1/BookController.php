@@ -15,15 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return BookResource::collection(Book::paginate(10));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return BookResource::collection(Book::all());
     }
 
     /**
@@ -33,13 +25,6 @@ class BookController extends Controller
     {
         $book = Book::create($request->validated());
         return BookResource::make($book);
-
-        // $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'author' => 'required|string|max:255',
-        //     'year' => 'required|integer',
-        //     'description' => 'nullable|string',
-        // ]);
     }
 
     /**
@@ -48,14 +33,6 @@ class BookController extends Controller
     public function show(Book $book)
     {
         return BookResource::make($book);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
-    {
-        //
     }
 
     /**

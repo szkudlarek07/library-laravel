@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
 
@@ -13,15 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        ReviewResource::collection(Review::all());
     }
 
     /**
@@ -29,7 +23,8 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        //
+        $review = Review::create($request->validated());
+        return ReviewResource::make($review);
     }
 
     /**
@@ -37,15 +32,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Review $review)
-    {
-        //
+        return ReviewResource::make($review);
     }
 
     /**
@@ -53,7 +40,8 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review)
     {
-        //
+        $review->update($request->validated());
+        return ReviewResource::make($review);
     }
 
     /**
@@ -61,6 +49,7 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+        return ReviewResource::make($review);
     }
 }
